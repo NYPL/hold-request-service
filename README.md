@@ -13,8 +13,8 @@ The Hold Request Service receives a request from the Discovery interface
 and processes the intended action. A request can be for a hold in Sierra
 or ReCAP.
 
-Once the service validates the request, saves it to its database instance,
-and sends a new request to its Kinesis stream and returns a successful
+Once the service validates the request and saves it to its database instance,
+it sends its Avro encoded data to a Kinesis stream and returns a successful
 response or returns an error response.
 
 After these responsibilities are met, the contract ends and another
