@@ -101,7 +101,10 @@ class HoldRequestController extends ServiceController
 
             if ($this->isUseJobService()) {
                 APILogger::addDebug('Initiating job via Job Service API.', ['jobID' => $holdRequest->getJobId()]);
-                JobService::beginJob($holdRequest, 'Job started for hold request.');
+                JobService::beginJob(
+                    $holdRequest,
+                    'Job started for hold request. (RequestID: ' . $holdRequest->getId() . ')'
+                );
             }
 
             return $this->getResponse()->withJson(

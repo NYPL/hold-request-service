@@ -126,7 +126,7 @@ class ServiceController extends Controller
     /**
      * @return bool
      */
-    public function hasReadRequestScope(): bool
+    protected function hasReadRequestScope(): bool
     {
         return (bool) in_array(
             self::READ_REQUEST_SCOPE,
@@ -138,7 +138,7 @@ class ServiceController extends Controller
     /**
      * @return bool
      */
-    public function hasWriteRequestScope(): bool
+    protected function hasWriteRequestScope(): bool
     {
         return (bool) in_array(
             self::WRITE_REQUEST_SCOPE,
