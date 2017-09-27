@@ -34,7 +34,7 @@ class NewHoldRequest extends HoldRequestModel
             $this->requestType = $requestType;
         } else {
             $this->requestType = 'hold';
-            APILogger::addInfo('Invalid requestType received. Reset to default "hold."');
+            APILogger::addDebug('Invalid requestType received. Reset to default "hold."');
         }
     }
 }

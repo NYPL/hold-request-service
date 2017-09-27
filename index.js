@@ -52,8 +52,8 @@ exports.handler = function(event, context, callback) {
     if (event.body) {
         headers['CONTENT_LENGTH'] = Buffer.byteLength(event.body, 'utf8');
 
-        if (event.headers['Content-type']) {
-            headers['CONTENT_TYPE'] = event.headers['Content-type'];
+        if (event.headers['Content-Type']) {
+            headers['CONTENT_TYPE'] = event.headers['Content-Type'];
         }
     }
 

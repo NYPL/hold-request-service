@@ -77,6 +77,8 @@ class ServiceControllerTest extends TestCase
 
     /**
      * @throws ExpiredException
+     *
+     * @covers NYPL\Services\ServiceController::isRequestAuthorized
      */
     public function testIfTokenIsValid()
     {
