@@ -30,7 +30,7 @@ class JobServiceTest extends TestCase
     }
 
     /**
-     * @covers \NYPL\Services\JobService
+     * @covers NYPL\Services\JobService
      */
     public function testIfJobIdIsUnique()
     {
