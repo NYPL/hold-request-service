@@ -18,7 +18,7 @@ class ServiceControllerTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        MockConfig::initialize(__DIR__ . '/../Mocks/');
+        MockConfig::initialize(__DIR__ . '/Mocks/');
         MockService::setMockContainer();
         $this->mockContainer = MockService::getMockContainer();
 
