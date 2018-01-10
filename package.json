@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "pretest": "phplint src/*.php src/**/*.php src/**/**/*.php",
-    "test-request": "node-lambda run -j config/event_sources_development.json -f config/var_testing.env",
+    "test-request": "node-lambda run -j config/event_sources_development.json -f tests/Mocks/mock.env",
     "deploy-development": "node-lambda deploy -e development -f config/var_development.env -S config/event_sources_development.json -b {subnets} -g {securitygroups}",
     "deploy-qa": "node-lambda deploy -e qa -f config/var_qa.env -S config/event_sources_qa.json -b {subnets} -g {securitygroups}",
     "deploy-production": "node-lambda deploy -e production -f config/var_production.env -S config/event_sources_production.json -b {subnets} -g {securitygroups}"

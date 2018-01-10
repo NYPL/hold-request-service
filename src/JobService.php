@@ -220,7 +220,7 @@ class JobService
     {
         self::initializeJobClient();
         $holdRequest->read();
-        $data = $holdRequest->getRawData();
+        $data = (array)$holdRequest;
 
         try {
             if ($holdRequest->isSuccess()) {
@@ -249,8 +249,9 @@ class JobService
                 );
             }
         } catch (\Exception $exception) {
-            APILogger::addInfo(
-                'Job threw an exception. ' . $exception->getMessage() . '. (RequestID: ' . $holdRequest->getId() . ')'
+            APILogger::addDebug(
+                'Job threw an exception. ' . $exception->getMessage(),
+                ['requestID' => $holdRequest->getId(), 'jobId' => $holdRequest->getJobId()]
             );
         }
     }
