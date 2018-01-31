@@ -143,7 +143,7 @@ class JobService
             } catch (\Exception $exception) {
                 APILogger::addError('Not able to communicate with the Jobs Service API.');
                 throw new APIException(
-                    'Jobs Service failed to generate an ID. Service may be misconfigured or unavailable.',
+                    'Job Service failed to generate an ID. Service may be misconfigured or unavailable.',
                     [],
                     0,
                     $exception,
@@ -155,7 +155,7 @@ class JobService
         if (!self::getJobId()) {
             self::generateRandomId();
             APILogger::addDebug(
-                'Job ID returned as a UUID. If the Jobs Service is needed, please check your configuration.',
+                'Job ID returned as a UUID. If the Job Service is needed, please check your configuration.',
                 [self::getJobId()]
             );
         }
@@ -221,6 +221,7 @@ class JobService
         self::initializeJobClient();
         $holdRequest->read();
         $data = (array)$holdRequest;
+        $failureMsg = ($holdRequest->getError()) ? $holdRequest->getError() : self::JOB_FAILURE_MESSAGE;
 
         try {
             if ($holdRequest->isSuccess()) {
@@ -236,7 +237,7 @@ class JobService
                     self::getJobStatusSuccess()
                 );
             } else {
-                self::buildJobNotice($data, self::JOB_FAILURE_MESSAGE . ' (RequestID: ' . $holdRequest->getId() . ')');
+                self::buildJobNotice($data, $failureMsg . ' (RequestID: ' . $holdRequest->getId() . ')');
                 self::getJobStatus()->setNotice(self::getJobNotice());
 
                 APILogger::addDebug(
