@@ -75,6 +75,12 @@ abstract class HoldRequestModel extends Model
     public $docDeliveryData;
 
     /**
+     * @SWG\Property(example="Item reported as not available.")
+     * @var string
+     */
+    public $error;
+
+    /**
      * @return string
      */
     public function getPatron()
@@ -253,4 +259,21 @@ abstract class HoldRequestModel extends Model
     {
         return new ElectronicDocumentData($data, true);
     }
+
+    /**
+     * @return null|string
+     */
+    public function getError()
+    {
+        return $this->error;
+    }
+
+    /**
+     * @param null|string $error
+     */
+    public function setError($error)
+    {
+        $this->error = $error;
+    }
+
 }
