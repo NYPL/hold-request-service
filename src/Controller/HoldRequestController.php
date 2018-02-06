@@ -58,7 +58,7 @@ class HoldRequestController extends ServiceController
      *     ),
      *     security={
      *         {
-     *             "api_auth": {"openid offline_access api write:hold_request readwrite:hold_request"}
+     *             "api_auth": {"openid write:hold_request readwrite:hold_request"}
      *         }
      *     }
      * )
@@ -171,7 +171,7 @@ class HoldRequestController extends ServiceController
      *     ),
      *     security={
      *         {
-     *             "api_auth": {"openid offline_access api read:hold_request readwrite:hold_request"}
+     *             "api_auth": {"openid read:hold_request readwrite:hold_request"}
      *         }
      *     }
      * )
@@ -239,7 +239,7 @@ class HoldRequestController extends ServiceController
      *     ),
      *     security={
      *         {
-     *             "api_auth": {"openid offline_access api read:hold_request readwrite:hold_request"}
+     *             "api_auth": {"openid read:hold_request readwrite:hold_request"}
      *         }
      *     }
      * )
@@ -306,7 +306,7 @@ class HoldRequestController extends ServiceController
      *     ),
      *     security={
      *         {
-     *             "api_auth": {"openid offline_access api write:hold_request readwrite:hold_request"}
+     *             "api_auth": {"openid write:hold_request readwrite:hold_request"}
      *         }
      *     }
      * )
@@ -335,6 +335,7 @@ class HoldRequestController extends ServiceController
 
             $holdRequest->addFilter(new Filter('id', $args['id']));
             $holdRequest->read();
+
             $holdRequest->update(
                 $this->getRequest()->getParsedBody()
             );
