@@ -320,17 +320,6 @@ class HoldRequestController extends ServiceController
     public function updateHoldRequest(Request $request, Response $response, array $args)
     {
         try {
-            if (!$this->isRequestAuthorized()) {
-                APILogger::addInfo('Invalid scope received. Client not authorized to update hold requests.');
-                return $this->invalidScopeResponse(new APIException(
-                    'Client not authorized to update hold requests.',
-                    null,
-                    0,
-                    null,
-                    403
-                ));
-            }
-
             $data = $this->getRequest()->getParsedBody();
 
             $holdRequest = new HoldRequest();
