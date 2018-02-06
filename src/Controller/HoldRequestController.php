@@ -68,20 +68,7 @@ class HoldRequestController extends ServiceController
      */
     public function createHoldRequest()
     {
-        APILogger::addDebug('Hold request initiated.');
-
         try {
-            if (!$this->isRequestAuthorized()) {
-                APILogger::addError('Invalid request received. Client not authorized to get bulk hold requests.');
-                return $this->invalidScopeResponse(new APIException(
-                    'Client not authorized to create hold requests.',
-                    null,
-                    0,
-                    null,
-                    403
-                ));
-            }
-
             $data = $this->getRequest()->getParsedBody();
 
             $data['jobId'] = JobService::generateJobId($this->isUseJobService());
@@ -194,17 +181,6 @@ class HoldRequestController extends ServiceController
     public function getHoldRequests()
     {
         try {
-            if (!$this->isRequestAuthorized()) {
-                APILogger::addInfo('Invalid scope received. Client not authorized to get single hold requests.');
-                return $this->invalidScopeResponse(new APIException(
-                    'Client not authorized to retrieve hold requests.',
-                    null,
-                    0,
-                    null,
-                    403
-                ));
-            }
-
             $dateFilter = null;
             if ($this->getRequest()->getParam('createdDate')) {
                 $dateFilter = new DateQueryFilter(
@@ -278,17 +254,6 @@ class HoldRequestController extends ServiceController
     public function getHoldRequest(Request $request, Response $response, array $args)
     {
         try {
-            if (!$this->isRequestAuthorized()) {
-                APILogger::addInfo('Invalid scope received. Client not authorized to get single hold requests.');
-                return $this->invalidScopeResponse(new APIException(
-                    'Client not authorized to retrieve hold requests.',
-                    null,
-                    0,
-                    null,
-                    403
-                ));
-            }
-
             return  $this->getDefaultReadResponse(
                 new HoldRequest(),
                 new HoldRequestResponse(),
@@ -381,9 +346,6 @@ class HoldRequestController extends ServiceController
 
             $holdRequest->addFilter(new Filter('id', $args['id']));
             $holdRequest->read();
-
-            APILogger::addDebug('Hold request update initiated.');
-
             $holdRequest->update(
                 $this->getRequest()->getParsedBody()
             );
