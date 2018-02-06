@@ -147,6 +147,13 @@ class HoldRequestController extends ServiceController
      *         description="ID of record provided by ILS"
      *     ),
      *     @SWG\Parameter(
+     *         name="success",
+     *         in="query",
+     *         required=false,
+     *         type="string",
+     *         description="Success status of a hold request."
+     *     ),
+     *     @SWG\Parameter(
      *         name="processed",
      *         in="query",
      *         required=false,
@@ -213,7 +220,7 @@ class HoldRequestController extends ServiceController
                 new ModelSet(new HoldRequest()),
                 new HoldRequestsResponse(),
                 $dateFilter,
-                ['patron', 'record', 'processed']
+                ['patron', 'record', 'success', 'processed']
             );
         } catch (\Exception $exception) {
             $errorType = 'get-bulk-hold-requests-error';
