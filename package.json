@@ -13,7 +13,8 @@
   "repository": {},
   "keywords": [],
   "dependencies": {
-    "http-string-parser": "^0.0.5"
+    "http-string-parser": "^0.0.5",
+    "node-lambda": "^0.12.0"
   },
   "devDependencies": {
     "phplint": "~1.0.0"
