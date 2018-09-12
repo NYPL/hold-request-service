@@ -6,9 +6,9 @@
   "scripts": {
     "pretest": "phplint src/*.php src/**/*.php src/**/**/*.php",
     "test-request": "node-lambda run -j config/event_sources_development.json -f tests/Mocks/mock.env",
-    "deploy-development": "node-lambda deploy -e development -f config/var_development.env -S config/event_sources_development.json -b {subnets} -g {securitygroups}",
-    "deploy-qa": "node-lambda deploy -e qa -f config/var_qa.env -S config/event_sources_qa.json -b {subnets} -g {securitygroups}",
-    "deploy-production": "node-lambda deploy -e production -f config/var_production.env -S config/event_sources_production.json -b {subnets} -g {securitygroups}"
+    "deploy-development": "./node_modules/.bin/node-lambda deploy -e development -f config/var_development.env -S config/event_sources_development.json --role arn:aws:iam::224280085904:role/lambda_basic_execution --profile nypl-sandbox -b subnet-f4fe56af -g sg-1d544067",
+    "deploy-qa": "./node_modules/.bin/node-lambda deploy -e qa -f config/var_qa.env -S config/event_sources_qa.json --role arn:aws:iam::946183545209:role/lambda-full-access --profile nypl-digital-dev -b subnet-f35de0a9,subnet-21a3b244 -g sg-aa74f1db",
+    "deploy-production": "./node_modules/.bin/node-lambda deploy -e production -f config/var_production.env -S config/event_sources_production.json --role arn:aws:iam::946183545209:role/lambda-full-access --profile  nypl-digital-dev -b subnet-59bcdd03,subnet-5deecd15 -g sg-116eeb60"
   },
   "repository": {},
   "keywords": [],
@@ -16,6 +16,7 @@
     "http-string-parser": "^0.0.5"
   },
   "devDependencies": {
+    "node-lambda": "^0.12.0",
     "phplint": "~1.0.0"
   }
 }
