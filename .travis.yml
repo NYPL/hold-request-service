@@ -25,7 +25,7 @@ before_deploy:
 deploy:
 - provider: script
   skip_cleanup: true
-  script: "./scripts/travis-deploy.sh $TRAVIS_BRANCH"
+  script: "./scripts/travis-deploy.sh $ENVIRONMENT_NAME"
   on:
     all_branches: true
     condition: "$TRAVIS_BRANCH =~ ^(development|qa|production)$"
