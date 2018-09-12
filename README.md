@@ -88,7 +88,6 @@ Homebrew is highly recommended for PHP:
 2. Install required dependencies.
    * Run `npm install` to install Node.js packages.
    * Run `composer install` to install PHP packages.
-   * If you have not already installed `node-lambda` as a global package, run `npm install -g node-lambda`.
 
 ## Security
 
