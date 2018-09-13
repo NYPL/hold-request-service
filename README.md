@@ -137,8 +137,12 @@ Configures Lambda event sources (triggers) specific to each environment.
 
 ### Process a Lambda Event
 
-This lambda has two events, DiscoveryEvent.json and RecapEvent.json, which simulate
-holds processed from Discovery UI and RecapUI. HoldRequestConsumer uses the absence/presence of the deliveryLocation property to tell the source of the event. Only the Discovery event will be processed to the Recap API and placed in the HoldRequestResult Kinesis stream. The RecapEvent will be filtered out by the HoldRequestConsumer.
+This lambda has three events:
+- DiscoveryEvent.json, simulating a hold request from Discovery UI
+- RecapEvent.json, simulating a hold request from Recap UI
+- EddEvent.json, simulating an edd request from Discovery UI.
+
+HoldRequestConsumer uses the absence/presence of the deliveryLocation property to classify the event as coming from Discovery UI/Recap UI. Only an event from Discovery UI will be processed to the Recap API. The RecapEvent will be filtered out by the HoldRequestConsumer. In case of an event from Discovery UI, if there are errors or in case of an EDD request, the HoldRequestConsumer will write an event to the HoldRequestResult Kinesis Stream. So, of the three events above, only EddEvent.json should result in an event hitting the HoldRequestResultConsumer and an email.
 
 
 To use `node-lambda` to process the sample API Gateway event in `event.json`, run:
