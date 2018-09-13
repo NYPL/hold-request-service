@@ -44,7 +44,8 @@
     "Cache-Control": "max-age=0",
     "User-Agent": "Custom User Agent String",
     "CloudFront-Forwarded-Proto": "https",
-    "Accept-Encoding": "gzip, deflate, sdch"
+    "Accept-Encoding": "gzip, deflate, sdch",
+    "Content-Type":"application/json"
   },
   "pathParameters": {
     "proxy": "path/to/resource"
