@@ -147,9 +147,9 @@ This lambda has three events:
 1. Because the event lacks a deliveryLocation, HoldRequestConsumer interprets the event as originating from the Discovery UI
 2. HoldRequestConsumer calls the Recap API
 3. If the Recap API returns a success response, HoldRequestConsumer does nothing.
-4. If the Recap API returns a failure response, HoldRequestConsumer records the error in HoldRequestResult stream.
+4. If the Recap API returns a failure response, HoldRequestConsumer records the error in HoldRequestResult stream. In this case the HoldRequestResultConsumer notifies the HoldRequestService that the hold has not been processed
 
-The existing DiscoveryEvent.json should return a success response (i.e. HoldRequestConsumer should do nothing) 
+The existing DiscoveryEvent.json should return a success response (i.e. HoldRequestConsumer should do nothing)
 
 ### RecapEvent: simulating a hold request from Recap UI
 
