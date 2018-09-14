@@ -142,8 +142,24 @@ This lambda has three events:
 - RecapEvent.json, simulating a hold request from Recap UI
 - EddEvent.json, simulating an edd request from Discovery UI.
 
-HoldRequestConsumer uses the absence/presence of the deliveryLocation property to classify the event as coming from Discovery UI/Recap UI. Only an event from Discovery UI will be processed to the Recap API. The RecapEvent will be filtered out by the HoldRequestConsumer. In case of an event from Discovery UI, if there are errors or in case of an EDD request, the HoldRequestConsumer will write an event to the HoldRequestResult Kinesis Stream. So, of the three events above, only EddEvent.json should result in an event hitting the HoldRequestResultConsumer and an email.
+### DiscoveryEvent: simulating a hold request from Discovery UI
 
+1. Because the event lacks a deliveryLocation, HoldRequestConsumer interprets the event as originating from the Discovery UI
+2. HoldRequestConsumer calls the Recap API
+3. If the Recap API returns a success response, HoldRequestConsumer does nothing.
+4. If the Recap API returns a failure response, HoldRequestConsumer records the error in HoldRequestResult stream.
+
+The existing DiscoveryEvent.json should return a success response (i.e. HoldRequestConsumer should do nothing) 
+
+### RecapEvent: simulating a hold request from Recap UI
+
+1. Because the event contains a deliveryLocation, HoldRequestConsumer interprets the event as a Recap UI originating event and filters it out (i.e. does nothing with it).   (Presumably ReCAP already knows about the hold request represented.)
+
+### EddEvent: simulating an edd request from Discovery UI
+
+1. An EDD event causes the Consumer to hit the ReCAP API and post a version of the result to the HoldRequestResult stream
+2. The HoldRequestResultConsumer reads the HoldRequestResult stream looking specifically for EDD requests in-process, and sends an email via SES.
+3. If SES returns success, the HoldRequest object has `.processed` set to TRUE and a PATCH is sent to HoldRequestService. (HoldRequestService updates the record and broadcasts the change via the HoldRequest stream - which is ignored by HoldRequestConsumer because processed === TRUE.)
 
 To use `node-lambda` to process the sample API Gateway event in `event.json`, run:
 
