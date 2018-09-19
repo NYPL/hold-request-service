@@ -137,10 +137,34 @@ Configures Lambda event sources (triggers) specific to each environment.
 
 ### Process a Lambda Event
 
+This lambda has three events:
+- DiscoveryEvent.json, simulating a hold request from Discovery UI
+- RecapEvent.json, simulating a hold request from Recap UI
+- EddEvent.json, simulating an edd request from Discovery UI.
+
+### DiscoveryEvent: simulating a hold request from Discovery UI
+
+1. Because the event lacks a deliveryLocation, HoldRequestConsumer interprets the event as originating from the Discovery UI
+2. HoldRequestConsumer calls the Recap API
+3. If the Recap API returns a success response, HoldRequestConsumer does nothing.
+4. If the Recap API returns a failure response, HoldRequestConsumer records the error in HoldRequestResult stream. In this case the HoldRequestResultConsumer notifies the HoldRequestService that the hold has not been processed
+
+The existing DiscoveryEvent.json should return a success response (i.e. HoldRequestConsumer should do nothing)
+
+### RecapEvent: simulating a hold request from Recap UI
+
+1. Because the event contains a deliveryLocation, HoldRequestConsumer interprets the event as a Recap UI originating event and filters it out (i.e. does nothing with it).   (Presumably ReCAP already knows about the hold request represented.)
+
+### EddEvent: simulating an edd request from Discovery UI
+
+1. An EDD event causes the Consumer to hit the ReCAP API and post a version of the result to the HoldRequestResult stream
+2. The HoldRequestResultConsumer reads the HoldRequestResult stream looking specifically for EDD requests in-process, and sends an email via SES.
+3. If SES returns success, the HoldRequest object has `.processed` set to TRUE and a PATCH is sent to HoldRequestService. (HoldRequestService updates the record and broadcasts the change via the HoldRequest stream - which is ignored by HoldRequestConsumer because processed === TRUE.)
+
 To use `node-lambda` to process the sample API Gateway event in `event.json`, run:
 
 ~~~~
-node-lambda run
+node-lambda run -j [eventfile] -f [configfile]
 ~~~~
 
 ### Run as a Web Server
