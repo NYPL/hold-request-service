@@ -142,7 +142,7 @@ Configures Lambda event sources (triggers) specific to each environment.
 
 ## Usage
 
-### Process a Lambda Event
+### Sample Events
 
 This lambda has three events:
 - DiscoveryEvent.json, simulating a hold request from Discovery UI
@@ -167,6 +167,10 @@ The existing DiscoveryEvent.json should return a success response (i.e. HoldRequ
 1. An EDD event causes the Consumer to hit the ReCAP API and post a version of the result to the HoldRequestResult stream
 2. The HoldRequestResultConsumer reads the HoldRequestResult stream looking specifically for EDD requests in-process, and sends an email via SES.
 3. If SES returns success, the HoldRequest object has `.processed` set to TRUE and a PATCH is sent to HoldRequestService. (HoldRequestService updates the record and broadcasts the change via the HoldRequest stream - which is ignored by HoldRequestConsumer because processed === TRUE.)
+
+Because the edd request in the `sampleEvents` file has already been processed, you will need to substitute an available item id in order to get a completely successful run for all the downstream components (i.e. to the point where HoldRequestResultConsumer sends an email)
+
+### Process a Lambda Event
 
 To use `node-lambda` to process the sample API Gateway event in `event.json`, run:
 
