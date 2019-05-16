@@ -195,3 +195,9 @@ Create a Swagger route to generate Swagger specification documentation:
 ~~~~
 $service->get("/docs", SwaggerGenerator::class);
 ~~~~
+
+## Deployment
+
+Deployments (AWS account `nypl-digital-dev`):
+ * Production: Lambda > Functions > HoldRequestService-production
+ * QA: Lambda > Functions > HoldRequestService-qa
