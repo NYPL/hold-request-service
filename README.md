@@ -132,11 +132,11 @@ security group.
 
 Configures environment variables common to *all* environments.
 
-### var_*environment*
+### var_*environment*.env
 
 Configures environment variables specific to each environment.
 
-### event_sources_*environment*
+### event_sources_*environment*.json
 
 Configures Lambda event sources (triggers) specific to each environment.
 
@@ -186,6 +186,11 @@ To use the PHP internal web server, run:
 php -S localhost:8888 -t . index.php
 ~~~~
 
+Note you'll need to:
+ * Add your AWS creds (`AWS_ACCESS_KEY_ID=`, `AWS_SECRET_ACCESS_KEY=`) to `.env` *temporarily*
+ * Copy your desired `var_{environment}.env` file to `var_app` (e.g. `cp config/var_qa.env config/var_app`) (**Note** `var_app` must not end in `.env`)
+ * Make sure all variables in `var_app` are decrypted
+
 You can then make a request to the Lambda: `http://localhost:8888/api/v0.1/hold-requests`.
 
 ### Swagger Documentation Generator
@@ -195,3 +200,7 @@ Create a Swagger route to generate Swagger specification documentation:
 ~~~~
 $service->get("/docs", SwaggerGenerator::class);
 ~~~~
+
+## Contributing
+
+This app follows a [Development-QA-Master](https://github.com/NYPL/engineering-general/blob/git-workflows/standards/git-workflow.md#development-qa-master) Git Workflow; Cut feature branches from `development`, promote to `qa` followed by `master`.
