@@ -10,6 +10,12 @@ install:
 script:
 - composer update
 - vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+branches:
+  # The following restricts builds to deployable branches and PRs
+  only:
+  - development
+  - qa
+  - master
 cache:
   directories:
   - node_modules
