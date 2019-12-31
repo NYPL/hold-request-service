@@ -10,6 +10,12 @@ install:
 script:
 - composer install
 - vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+branches:
+  # The following restricts builds to deployable branches and PRs
+  only:
+  - development
+  - qa
+  - master
 cache:
   directories:
   - node_modules
@@ -28,7 +34,7 @@ deploy:
   script: "./scripts/travis-deploy.sh $ENVIRONMENT_NAME"
   on:
     all_branches: true
-    condition: "$TRAVIS_BRANCH =~ ^(development|qa|production)$"
+    condition: "$TRAVIS_BRANCH =~ ^(qa|production)$"
 after_deploy: echo "Successfully executed deploy trigger for $TRAVIS_BRANCH"
 env:
   global:
