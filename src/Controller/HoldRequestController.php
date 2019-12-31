@@ -424,7 +424,7 @@ class HoldRequestController extends ServiceController
     protected function ptypeDisallowsHolds ($patronId) {
         $response = (new PatronEligibilityClient())->get("patrons/$patronId/hold-request-eligibility");
         $response = json_decode($response->getBody(), true);
-        $disallows = $response['ptypeDisallowsHolds'];
+        $disallows = array_key_exists('ptypeDisallowsHolds', $response) ? $response['ptypeDisallowsHolds'] : false;
 
         APILogger::addDebug("Determined patron ptype " . ($disallows ? 'dissallows' : 'allows' ) . " holds for patronId=$patronId");
 
