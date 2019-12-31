@@ -107,13 +107,7 @@ Various files are used to configure and deploy the Lambda.
 
 ### .env
 
-`.env` is used *locally* for two purposes:
-
-1. By `node-lambda` for deploying to and configuring Lambda in *all* environments.
-   * You should use this file to configure the common settings for the Lambda
-   (e.g. timeout, role, etc.) and include AWS credentials to deploy the Lambda.
-2. To set local environment variables so the Lambda can be run and tested in a local environment.
-   These parameters are ultimately set by the [var environment files](#var_environment) when the Lambda is deployed.
+`.env` is used *locally* for by `node-lambda` for deploying to and configuring Lambda in *all* environments. You should use this file to configure the common settings for the Lambda (e.g. timeout, role, etc.)
 
 ### package.json
 
@@ -187,8 +181,8 @@ php -S localhost:8888 -t . index.php
 ~~~~
 
 Note you'll need to:
- * Add your AWS creds (`AWS_ACCESS_KEY_ID=`, `AWS_SECRET_ACCESS_KEY=`) to `.env` *temporarily*
  * Copy your desired `var_{environment}.env` file to `var_app` (e.g. `cp config/var_qa.env config/var_app`) (**Note** `var_app` must not end in `.env`)
+ * Add your AWS creds (`AWS_ACCESS_KEY_ID=`, `AWS_SECRET_ACCESS_KEY=`) to `config/var_app`
  * Make sure all variables in `var_app` are decrypted
 
 You can then make a request to the Lambda: `http://localhost:8888/api/v0.1/hold-requests`.
