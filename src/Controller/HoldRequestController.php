@@ -8,6 +8,7 @@ use NYPL\Services\Model\HoldRequest\HoldRequest;
 use NYPL\Services\Model\Response\HoldRequestResponse;
 use NYPL\Services\Model\Response\HoldRequestErrorResponse;
 use NYPL\Services\Model\Response\HoldRequestsResponse;
+use NYPL\Services\PatronEligibilityClient;
 use NYPL\Starter\APIException;
 use NYPL\Starter\APILogger;
 use NYPL\Starter\Filter;
@@ -84,6 +85,10 @@ class HoldRequestController extends ServiceController
                 return $this->invalidRequestResponse($exception);
             }
 
+            if ($this->ptypeDisallowsHolds($holdRequest->patron)) {
+              throw new APIException('Patron ptype does not allow holds', '', 0, null, 400);
+            }
+
             $holdRequest->create();
 
             if ($this->isUseJobService()) {
@@ -103,6 +108,12 @@ class HoldRequestController extends ServiceController
                 $exception,
                 400
             );
+        } catch (APIException $exception) {
+            $errorType = 'create-hold-request-error';
+            $errorMsg = $exception->getMessage();
+
+            return $this->processException($errorType, $errorMsg, $exception, $this->getRequest());
+
         } catch (\Exception $exception) {
             $errorType = 'create-hold-request-error';
             $errorMsg = 'Unable to create hold request due to a problem with dependent services.';
@@ -403,4 +414,21 @@ class HoldRequestController extends ServiceController
 
         return $this->getResponse()->withJson($errorResp)->withStatus($statusCode);
     }
+
+    /**
+     *  This returns true if the given patron's ptype disallows holds.
+     *
+     *  @param string $patronId PatronId for whom we should check the ptype
+     *  @return boolean
+     */
+    protected function ptypeDisallowsHolds ($patronId) {
+        $response = (new PatronEligibilityClient())->get("patrons/$patronId/hold-request-eligibility");
+        $response = json_decode($response->getBody(), true);
+        $disallows = $response['ptypeDisallowsHolds'];
+
+        APILogger::addDebug("Determined patron ptype " . ($disallows ? 'dissallows' : 'allows' ) . " holds for patronId=$patronId");
+
+        return $disallows;
+    }
+
 }
