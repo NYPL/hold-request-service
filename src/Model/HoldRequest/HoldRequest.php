@@ -94,6 +94,7 @@ class HoldRequest extends NewHoldRequest implements MessageInterface, ReadInterf
                         ["name" => "volume", "type" => ["null", "string"]],
                         ["name" => "issue", "type" => ["null", "string"]],
                         ["name" => "requestNotes", "type" => ["null", "string"]],
+                        ["name" => "date", "type" => ["null", "string"]]
                     ]]
                 ]],
                 ["name" => "error", "type" => ["null", "string"]],

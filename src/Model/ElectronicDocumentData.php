@@ -62,6 +62,12 @@ class ElectronicDocumentData extends Model
     public $requestNotes;
 
     /**
+     * @SWG\Property(example="1974")
+     * @var string
+     */
+    public $date;
+
+    /**
      * @return string
      */
     public function getEmailAddress()
@@ -187,5 +193,21 @@ class ElectronicDocumentData extends Model
     public function setRequestNotes($requestNotes)
     {
         $this->requestNotes = $requestNotes;
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getDate()
+    {
+        return $this->date;
+    }
+
+    /**
+     * @param null|string $date
+     */
+    public function setDate($date)
+    {
+        $this->date = $date;
     }
 }

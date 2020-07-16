@@ -47,7 +47,8 @@ A Hold Request is governed by the following Avro 1.8.1 schema:
     "startPage": "string",
     "endPage": "string",
     "issue": "string",
-    "volume": "string"
+    "volume": "string",
+    "date": "string"
   }
 }
 ~~~
@@ -77,7 +78,7 @@ itemOwningInstitution, requestingInstitution
 * Retrieval/Recall related: author, callNumber, deliveryLocation
 * Temp record related: titleIdentifier
 * EDD requires email
-* EDD related: startPage, endPage, volume, issue, chapterTitle
+* EDD related: startPage, endPage, volume, issue, chapterTitle, date
 
 ## Requirements
 
