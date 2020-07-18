@@ -137,6 +137,38 @@ Configures Lambda event sources (triggers) specific to each environment.
 
 ## Usage
 
+### Running locally
+
+Determine what environment you want to run against locally (e.g. qa):
+
+```
+cp config/var_qa.env config/var_app
+```
+
+Edit `config/var_app`:
+ - decrypt all encrypted variables ([kms-util](https://github.com/NYPL-discovery/kms-util) may help)
+ - add platform api config (also not encrypted):
+   - `API_BASE_URL=https://[fqdn/api/v0.1/`
+   - `OAUTH_CLIENT_ID=[clientid]`
+   - `OAUTH_CLIENT_SCOPES=openid`
+   - `OAUTH_CLIENT_SECRET=[secret]`
+   - `OAUTH_TOKEN_URI=https://isso.nypl.org/oauth/token`
+ - add AWS creds (e.g. from `~/.aws/credentials` for profile `nypl-sandbox` or `nypl-digital-dev`):
+   - `AWS_DEFAULT_REGION=us-east-1`
+   - `AWS_ACCESS_KEY_ID=[clientid]`
+   - `AWS_SECRET_ACCESS_KEY=[secret]`
+
+If you don't have access to the relevant RDS (which are locked down to NYPL site IP blocks), seed your own:
+ - Start a local postgres daemon (the [PG app is nice](https://postgresapp.com/) on OSX)
+ - `psql` and `create database hold_requests_qa`
+ - `psql hold_requests_qa < schema.sql`
+ - edit `config/var_app` to use your local db:
+   - `DB_CONNECT_STRING=pgsql:host=localhost;dbname=hold_requests_qa`
+   - `DB_PASSWORD=`
+   - `DB_USERNAME=[typically your username on your machine]`
+
+You should now be able to run the server locally via `php -S localhost:8888 -t . index.php` and interact with it through `curl` or [Postman](https://www.postman.com/). Note that when you create HoldRequests via POST, the data will be posted to the configured Kinesis stream, so consider downstream effects (i.e. don't write to production stream)
+
 ### Sample Events
 
 This lambda has three events:
