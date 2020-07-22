@@ -139,6 +139,18 @@ Configures Lambda event sources (triggers) specific to each environment.
 
 ### Running locally
 
+This app depends on php 7.1. Check your php version:
+```
+php --version
+```
+
+If you need to install php 7.1 on OSX, this may work for you:
+
+```
+brew tap exolnet/homebrew-deprecated
+brew install php@7.1
+```
+
 Determine what environment you want to run against locally (e.g. qa):
 
 ```
@@ -160,14 +172,54 @@ Edit `config/var_app`:
 
 If you don't have access to the relevant RDS (which are locked down to NYPL site IP blocks), seed your own:
  - Start a local postgres daemon (the [PG app is nice](https://postgresapp.com/) on OSX)
- - `psql` and `create database hold_requests_qa`
+ - `psql` and `create database hold_requests_qa;`
  - `psql hold_requests_qa < schema.sql`
  - edit `config/var_app` to use your local db:
    - `DB_CONNECT_STRING=pgsql:host=localhost;dbname=hold_requests_qa`
    - `DB_PASSWORD=`
    - `DB_USERNAME=[typically your username on your machine]`
 
-You should now be able to run the server locally via `php -S localhost:8888 -t . index.php` and interact with it through `curl` or [Postman](https://www.postman.com/). Note that when you create HoldRequests via POST, the data will be posted to the configured Kinesis stream, so consider downstream effects (i.e. don't write to production stream)
+You should now be able to run the server locally via `php -S localhost:8888 -t . index.php` and interact with it through `curl` or [Postman](https://www.postman.com/). Note that when you create HoldRequests via POST, the data will be posted to the configured Kinesis stream, so consider downstream effects (i.e. don't write to production stream).
+
+To test that the endpoint works for a physical hold request, try this:
+
+```
+curl -X POST "http://localhost:8888/api/v0.1/hold-requests" -H  "accept: application/json" -H  "Content-Type: application/json" -d '{
+  "patron": "5427701",
+  "nyplSource": "sierra-nypl",
+  "requestType": "hold",
+  "recordType": "i",
+  "record": "16362038",
+  "pickupLocation": "mal",
+  "neededBy": "2020-11-07T02:32:51Z",
+  "numberOfCopies": "1"
+}'
+```
+
+To test that the endpoint works for an EDD request, try this:
+
+```
+curl -X POST "http://localhost:8888/api/v0.1/hold-requests" -H  "accept: application/json" -H  "Content-Type: application/json" -d '{
+  "patron": "5427701",
+  "nyplSource": "sierra-nypl",
+  "requestType": "edd",
+  "recordType": "i",
+  "record": "16362038",
+  "neededBy": "2020-11-07T02:32:51Z",
+  "numberOfCopies": "1",
+  "docDeliveryData": {
+    "emailAddress": "user@example.com",
+    "chapterTitle": "Chapter One",
+    "startPage": "100",
+    "endPage": "150",
+    "author": "Anonymous",
+    "issue": "Summer 2017",
+    "volume": "159",
+    "date": "custom date",
+    "requestNotes": "Backup physical delivery requested."
+  }
+}'
+```
 
 ### Sample Events
 
