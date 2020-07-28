@@ -125,7 +125,8 @@ class HoldRequestControllerTest extends TestCase
                         "author": null,
                         "issue": null,
                         "volume": null,
-                        "requestNotes": null
+                        "requestNotes": null,
+                        "date": null
                     }
                 }
             }';
@@ -174,7 +175,8 @@ class HoldRequestControllerTest extends TestCase
                         "author": null,
                         "issue": null,
                         "volume": null,
-                        "requestNotes": null
+                        "requestNotes": null,
+                        "date": null
                     }
                 }
                 ]
@@ -237,7 +239,8 @@ class HoldRequestControllerTest extends TestCase
                         "author": null,
                         "issue": null,
                         "volume": null,
-                        "requestNotes": null
+                        "requestNotes": null,
+                        "date": null
                     }
                 }
             }';
@@ -290,7 +293,8 @@ class HoldRequestControllerTest extends TestCase
                         "author": null,
                         "issue": null,
                         "volume": null,
-                        "requestNotes": null
+                        "requestNotes": null,
+                        "date": null
                     }
                 }
             }';
