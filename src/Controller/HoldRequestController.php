@@ -74,6 +74,7 @@ class HoldRequestController extends ServiceController
 
             $data['jobId'] = JobService::generateJobId($this->isUseJobService());
             $data['success'] = $data['processed'] = false;
+            APILogger::addDebug('POST request sent.', $data);
 
             $holdRequest = new HoldRequest($data);
 
