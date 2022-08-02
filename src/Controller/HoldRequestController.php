@@ -76,6 +76,13 @@ class HoldRequestController extends ServiceController
             $data['success'] = $data['processed'] = false;
             APILogger::addDebug('POST request sent.', $data);
 
+            // Alias 'source' to 'nyplSource' for HTC:
+            if (array_key_exists('source', $data)) {
+              $data['nyplSource'] = $data['source'];
+              unset($data['source']);
+              APILogger::addDebug('POST request "source" translated to "nyplSource"', $data);
+            } 
+
             $holdRequest = new HoldRequest($data);
 
             APILogger::addDebug('POST request sent.', $data);
