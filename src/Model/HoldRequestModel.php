@@ -21,7 +21,7 @@ abstract class HoldRequestModel extends Model
     public $patron;
 
     /**
-     * @SWG\Property(example="sierra-nypl")
+     * @SWG\Property(example="sierra-nypl", description="Can also be passed as 'source'")
      * @var string
      */
     public $nyplSource;
