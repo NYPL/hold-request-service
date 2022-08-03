@@ -3,7 +3,7 @@ language:
 - node_js
 php:
 - 7.1
-node_js: "6.11"
+node_js: '6.11'
 install:
 - npm install
 - composer install
@@ -15,11 +15,11 @@ cache:
   - node_modules
   - vendor
 after_success:
-  - ENVIRONMENT_NAME=$TRAVIS_BRANCH
-  - if [ "$TRAVIS_BRANCH" == "master" ]; then ENVIRONMENT_NAME=production; fi
-  - vendor/bin/coveralls -v
-  - vendor/bin/phpcs -n --standard=PSR1,PSR2 src/
-  - vendor/bin/phpcbf src/
+- ENVIRONMENT_NAME=$TRAVIS_BRANCH
+- if [ "$TRAVIS_BRANCH" == "master" ]; then ENVIRONMENT_NAME=production; fi
+- vendor/bin/coveralls -v
+- vendor/bin/phpcs -n --standard=PSR1,PSR2 src/
+- vendor/bin/phpcbf src/
 before_deploy:
 - echo "All unit tests passed; Preparing to deploy $TRAVIS_BRANCH"
 deploy:
@@ -35,3 +35,4 @@ env:
   - secure: hojZqZ+890fDpfYd7m5fI2oSl3A+9tUdDGiVNlTbPED+riUnyTwkBIqgpu6MnuoICmR0JXqyVTkf1nK7KZiuj/DnI3Uhd+z/DGcqtDHZG7gnBemjBqxflqHaXBZsEtYPhh8HYyKSrNKfdWuTPmDxgTLOrp7lM3D+7FXp6nEUL+YUNL77c/XkVrKGzCkO6xjwD9lCuOJ8QqQXUeHdbeAumOElZQjbj1ENFhXQrtZ3xGXFg5ydsl8w6EkxoSxuHErP88vObiPUVwcLEkl9fpQUzB1sxAZXKPXysrTxPRpU/1ESTvtbZRaLKPldBANnRII3+AJ95tPoiTs0yoYp8Mb+lkLXbgl+kRsgT+uhUbItfZtULgEsp+o3KSum1fNklun9HceY8jyeJF5e3yL9lrI22zIqHYkd0uE3a5EXhf11CRJGPUSurCOpbkz+CiSFNZxPgRYvYg0F+o+sYMi2XyKuLiaBq9y4zhAk6vTFKc7RXsGv5fH8j7xLD8PcTzWn04sMfWOVz1eu0uwXX5tCAu163YSSne2zEd2GGn0X79S0C8QhHcO/HFaRXzUs1VM4CXQ/ZHbLeQ6eJU9IT/KguQO5kBE61Vwf32RFjw/hSR3BagQsT+rh+sfNI42JS7ShpDIrT0BLZr80qGVs77V+98+HKV5QDInO5BSAGH7PQdvjRUk=
   - secure: XJRq/wsp880dFqWeBv5S+BRFwY7TcoXWVTgFfgZG4r16u9si7Te1N/pLCpcnFZ8BxqxSyqX2s89OssTXsHNqzWi2PhzxKqYgm8wOtdtp4GkiG4zAPoSQAhNpT4NO9KX3CMzw+4dlVmdz+3+r8igRyM8MDccEI50u8gP2IW6evpYGAuWqNX6iTAjSA90aN4JRtq1umwc6R4JODaZtD6Z6XVXBvuCeUOfeTvLoW/ot6N7Tl1qPq0OcxYFuC9mmhbyouzoHFAAYGzVuuUElj38A8MBPyEUEPJUEJQAzNeWkQoUGl0uEBwke+DN3bKLjJfMce4IhXzzp5WSNh/8Vno0S0WnYgVpLaOVdJadwPpci5rqAXW8nKoCxq4xk+VW+gf4VRcL8lxNJkt1BKWaJ0j+pOmsLE90Q6ILbx2psXO1d4odqWwtzIM2R62TVXhNrNPASCx3/nik0ph17wlYiy6y78+9FwN1Z+Y6/NIMMwsM2GQpGrjlGivw0JlepSQOln3kp4LjFkr3M+G/mUdHhyE7K8c15A8jZRlX74Kx19BFfz7bCvSui3p8Xv/bLo8MuhdCwBcGga/+CJmIIdDjZ57mW4mVkbXZz8WV4zp7k8UkHi5lMGWbG8G1dyBM43LpssUxnn5dcS8tgy6vvfJelhrK87kIzLSwpNkGKhRGTKB46Fao=
   - secure: OaLcP302vkcmso14uMX6RiVeordCCy9vJTlPNvNoX6SSrJMFTsimqaJImz5KoBHDndfQVhgE8phVI/JvQMh+YQM9Isr3h0B3xDg4qkShtgvh5G1n9sESE34jvcAhu0Px5W3/Rv0wiEJ/xHAdjfp7z+W91uws3opPnNK0w/lA5akj93BDH7gdNhn0SwCZ6AijuDDKqftrURxqYjE44SgiVRS0AdNtON2eZnht0kij0/KHzOZ1GV7pVj1Sj5L9n6ymPKzv7KE4F7I4Eh0yCM04w4xF+odzN67cCcmCq7cgf7I531/m4vqyeof0BAqFNXea2GwFKiqkEKvrm1ONbhc1Nr2QSCpVAPCsjEmFVa7Qtr0elxi0zsqN0ll+WHSCNHflkS+cgW96EsB7nWhnS+y7O7hN/BojHrW1rK4LG1fBPtPGwDEf6iHsIHCHQyvNiqE1Th1bn6zKjW6V1ZFywy2u3p7qywvgnvUrgNVffUdOZsOdQMVEAV0jjf0L6n0qYjSqNP8P3R3iNRKNk6+VOnC0SM214LayZXfZsCtJPxsmiCW9yUOLI9hFlNXVU0EOBswLPxe3HD7ilwUWFg752+bONl4TSokyFrXlEpXU6WQFGnAcsri4jyqxD4WxcGcrBQ3Qa3nd4DcRWEVE1bM4f2Y5kJumQj8tI+DikAkHgR3+lI8=
+  - secure: OY56ebTjXs95OZ1tWKsh9nWcOZ1bo7lsapIADQyWjtDnfcE9u2swaAegKtMsx8qxIT/Czvjz31T4iVrWYZX/jzKezQE39lMyEkcZK3qmo1bRZhfeI7N890yV2YvLeOjL+1e1Ow72Q8UIrQnJ38wRcdTn8CWS6eTHdapMN/ZpMbtuWiapfax2eaGJ7xbjgKBOHqq544x98cosFQnVvkgfEouRor3HnzOsMZvPCDhfRQnzrAmHg48i1ggxTbMN34Z/97sMl5LBdxAot9Rsf447ZstkArdPn3INku5SJkI6XLozLZEKdFn5ZXmSdum/SEh00gH/asFh1a/OA2rNbyq4/aGsHRhuN2Nv2AYctTSLhyoGXfJI3hGF3XyHUOAznO+5LN/BdPXO+Jcj1Ad3PO3PW0bbBUV+A7q5uiugsEunf202EvVHzTxpTQp59EnXQ1Sa0srueXFMW4hdNsqet8bGNGq9FqbbNSFzRsIGIIix7ALpVryG5JLWmJcuuqo5DMG5NQnJIiGV4YBw4vQgfQctNp34IBhcQfx+tE+kPIe/puq/0vR5Ppgv9raa7D+C7NpUayn41C4g+/jQhx9K5v3QDeelxSv9aAqCxC3q4d+51dtU6LFCVh+hzgQXk6nD2INcT7MH56RuY8JxtgBJ095mSqOcVTp51CCQco1rNK/S+Rc=
