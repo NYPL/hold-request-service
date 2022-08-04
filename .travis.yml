@@ -3,7 +3,6 @@ language:
 - node_js
 php:
 - 7.1
-node_js: "6.11"
 install:
 - npm install
 - composer install
@@ -22,13 +21,14 @@ after_success:
   - vendor/bin/phpcbf src/
 before_deploy:
 - echo "All unit tests passed; Preparing to deploy $TRAVIS_BRANCH"
+- nvm install
 deploy:
 - provider: script
   skip_cleanup: true
   script: "./scripts/travis-deploy.sh $ENVIRONMENT_NAME"
   on:
     all_branches: true
-    condition: "$TRAVIS_BRANCH =~ ^(qa|production)$"
+    condition: "$ENVIRONMENT_NAME =~ ^(qa|production)$"
 after_deploy: echo "Successfully executed deploy trigger for $TRAVIS_BRANCH"
 env:
   global:
