@@ -283,3 +283,20 @@ $service->get("/docs", SwaggerGenerator::class);
 ## Contributing
 
 This app follows a [Development-QA-Master](https://github.com/NYPL/engineering-general/blob/git-workflows/standards/git-workflow.md#development-qa-master) Git Workflow; Cut feature branches from `development`, promote to `qa` followed by `master`.
+
+### Deployment
+
+Note: This app is integrated into API Gateway using a lambda version alias of "current". So, when deploying, you'll need to add a new version and point the "current" version alias to it:
+
+ 1. Deploy to environment
+   - Push to `qa` branch ant let Travis deploy to QA
+   - Confirm lambda appears to have been updated
+ 2. Publish new version
+   - On Lambda page: Actions > Publish New Version
+   - Choose a helpful version description (See Versions tab for examples)
+   - You should now see your new version under the Versions tab. Note the Version number
+ 3. Update the "current" alias in the appropriate environment
+   - e.g. To update the alias for QA to use Version 6:
+     `aws lambda update-alias --profile nypl-digital-dev --function-name HoldRequestService-qa --name current --function-version 6`
+
+This practice is unusual for an API Gateway integration. But it does allow us to safely deploy and test code (via the Test feature in the AWS Console) before activating that code generally. It also allows us to quickly roll back an activation should we need to do so by setting the "current" alias to the previous Version number.
