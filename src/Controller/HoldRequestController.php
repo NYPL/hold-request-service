@@ -81,7 +81,7 @@ class HoldRequestController extends ServiceController
               $data['nyplSource'] = $data['source'];
               unset($data['source']);
               APILogger::addDebug('POST request "source" translated to "nyplSource"', $data);
-            } 
+            }
 
             $holdRequest = new HoldRequest($data);
 
