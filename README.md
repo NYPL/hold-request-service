@@ -1,3 +1,7 @@
+# Deprecated
+
+As of Mar 24 2025, this app has been replaced by https://github.com/NYPL/hold-request-service-v2
+
 # NYPL Hold Request Service
 
 [![Build Status](https://travis-ci.org/NYPL/hold-request-service.svg?branch=master)](https://travis-ci.org/NYPL/hold-request-service)
