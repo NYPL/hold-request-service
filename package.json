@@ -17,6 +17,6 @@
   },
   "devDependencies": {
     "node-lambda": "^1.0.0",
-    "phplint": "~1.0.0"
+    "phplint": "~1.7.4"
   }
 }
